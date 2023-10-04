@@ -3,7 +3,7 @@ import React from "react";
 
 type Props = {
   children: JSX.Element;
-  icon: JSX.Element;
+  icon?: JSX.Element;
   title: string;
   description? :string;
 };

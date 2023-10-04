@@ -1,8 +1,7 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button, Card, Stack } from "@mui/material";
 import Section from "@/components/section";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { CloudUpload, Settings } from "@mui/icons-material";
 import ZeTable from "@/components/table";
 
@@ -17,38 +16,43 @@ export default function Home() {
       </Head>
       <Layout>
         <Box>
-          <Section
-            title="Calendario"
-            description="You can set discount calendar date in excel format"
-            icon={<CalendarMonthIcon fontSize="large" />}
-          >
-            <Stack direction={"row"} gap={2}>
-              <Button variant="contained" startIcon={<CloudUpload />}>
-                Subir archivo
-              </Button>
-
-            </Stack>
-          </Section>
-          <Section
-            title="Configuración"
-            icon={<Settings fontSize="large" />}
+          <Stack direction={"row"} justifyContent={"space-between"}>
+            <Box sx={{flex:1}}>
+              <Section
+                  title="Calendario"
+                  description="You can set discount calendar date in excel format"
+                >
+                  <Stack direction={"row"} gap={2}>
+                    <Button variant="contained" startIcon={<CloudUpload />}>
+                      Subir archivo
+                    </Button>
+                  </Stack>
+              </Section>
+            </Box>
+            <Box sx={{flex:1}}>
+              <Section
+                title="Variables"
+                description="You can set SKU variables"
+              >
+                <Stack direction={"row"} gap={2}>
+                  <Button variant="contained" startIcon={<CloudUpload />}>
+                    Subir archivo
+                  </Button>
+                </Stack>
+              </Section>
+            </Box>
+          </Stack>
+               <Section
+            title="Variables globales"
           >
             <Box className="table">
               <ZeTable/>
             </Box>
           </Section>
-          <Section
-            title="Extras"
-            icon={<Settings fontSize="large" />}
-          >
-            <Stack direction={"row"} gap={2}>
-              <Button variant="contained" startIcon={<CloudUpload />}>
-                Subir archivo
-              </Button>
-            </Stack>
-          </Section>
+          
         </Box>
       </Layout>
+      
     </>
   );
 }
