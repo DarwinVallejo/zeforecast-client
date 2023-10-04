@@ -14,7 +14,14 @@ const Accordion = ({ title, children, open = false }: Props) => {
 
   return (
     <Box>
-      <Button fullWidth variant="text" onClick={() => setIsOpen(!isOpen)}>
+      <Button
+        fullWidth
+        sx={{
+          justifyContent: "flex-start",
+        }}
+        variant="text"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDown />}
         <Typography variant="h6">{title}</Typography>
       </Button>
