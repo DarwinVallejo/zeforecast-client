@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { buildBody, validateForm } from "./controller";
 import formidable from "formidable";
 
@@ -13,10 +13,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const form = formidable({});
-    const _form = await form.parse(req);
-    const {premises, initial, final} = _form[0];
-    const {calendar} = _form[1];
+    const form = formidable({multiples:true, maxFiles:2});
+    const[field, files] = await form.parse(req);
+    console.log({field, files});
+    const {initial, final} = field;
+    const {calendar, premises} = files;
     const {valid, msn} = validateForm({calendar, premises, initial, final});
     if(!valid){
         return res.status(400).json({valid, msn});
