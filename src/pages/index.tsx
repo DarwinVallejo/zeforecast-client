@@ -57,24 +57,18 @@ export default function Home() {
             </Grid>
             <Grid item container xs={8}>
               <Grid item xs={6}>
-                <Section
-                  title="Calendario de promociones"
-                  description="You can set discount calendar date in excel format"
-                >
+                <div className="">
                   <Stack direction={"row"} gap={2}>
                     <InputFileUpload {...register("calendarFile")} />
                   </Stack>
-                </Section>
+                </div>
               </Grid>
               <Grid item xs={6} display={"flex"}>
-                <Section
-                  title="Premisas"
-                  description="You can set SKU variables"
-                >
+                <div>
                   <Stack direction={"row"} gap={2}>
                     <InputFileUpload {...register("settingFile")} />
                   </Stack>
-                </Section>
+                </div>
               </Grid>
             </Grid>
             <Grid
