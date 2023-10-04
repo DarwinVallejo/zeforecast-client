@@ -14,7 +14,7 @@ export default async function handler(
   if (req.method === "POST") {
     const form = formidable({});
     try {
-      const [, files] = await form.parse(req);
+      const [_, files] = await form.parse(req);
       const excelFile = files;
 
       if (!excelFile.file) {
