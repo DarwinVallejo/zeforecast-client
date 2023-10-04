@@ -1,10 +1,12 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import Layout from "@/components/layout";
-import Accordion from "@/components/accordion";
-import { Box } from "@mui/material";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Box, Button, Stack } from "@mui/material";
+import Section from "@/components/section";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import FunctionsIcon from "@mui/icons-material/Functions";
+import PublicIcon from "@mui/icons-material/Public";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import { CloudUpload } from "@mui/icons-material";
 
 export default function Home() {
   return (
@@ -17,15 +19,48 @@ export default function Home() {
       </Head>
       <Layout>
         <Box>
-          <Accordion title="Calendario" open>
+          <Section
+            title="Calendario"
+            icon={<CalendarMonthIcon fontSize="large" />}
+          >
+            <Stack direction={"row"} gap={2}>
+              <Button variant="contained" startIcon={<CloudDownloadIcon />}>
+                Descargar template
+              </Button>
+              <Button variant="contained" startIcon={<CloudUpload />}>
+                Subir archivo
+              </Button>
+              <Box>
+                <Button variant="contained" startIcon={<CloudDownloadIcon />}>
+                  Descargar reciente
+                </Button>
+              </Box>
+            </Stack>
+          </Section>
+          <Section
+            title="Variables fijas"
+            icon={<PublicIcon fontSize="large" />}
+          >
             <Box>Calendario</Box>
-          </Accordion>
-          <Accordion title="Variables fijas">
-            <Box>Calendario</Box>
-          </Accordion>
-          <Accordion title="Variables extras">
-            <Box>Calendario</Box>
-          </Accordion>
+          </Section>
+          <Section
+            title="Variables extras"
+            icon={<FunctionsIcon fontSize="large" />}
+          >
+            <Stack direction={"row"} gap={2}>
+              <Button variant="contained" startIcon={<CloudDownloadIcon />}>
+                Descargar template
+              </Button>
+              <Button variant="contained" startIcon={<CloudUpload />}>
+                Subir archivo
+              </Button>
+              <Box>
+                <Button variant="contained" startIcon={<CloudDownloadIcon />}>
+                  Descargar reciente
+                </Button>
+              </Box>
+            </Stack>
+          </Section>
         </Box>
       </Layout>
     </>

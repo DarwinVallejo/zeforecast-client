@@ -23,7 +23,7 @@ const Accordion = ({ title, children, open = false }: Props) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDown />}
-        <Typography variant="h6">{title}</Typography>
+        <Typography variant="h4">{title}</Typography>
       </Button>
       <Collapse in={isOpen}>{children}</Collapse>
     </Box>
