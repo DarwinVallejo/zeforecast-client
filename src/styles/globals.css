@@ -16,7 +16,7 @@ body {
 
 .titles{
   margin-left: 10px;
-  font-size: 5vh;
+  font-size: 4vh;
   font-weight: bold;
 }
 
@@ -36,6 +36,14 @@ body {
 .addBtn{
   background-color: black;
   color: white;
-}:hover{
-  pointer-events: none;
+}
+
+.addBtn:hover{
+  background-color: black;
+  color: white;
+}
+
+.inputDate{
+  width:20%;
+  margin-right:25px;
 }

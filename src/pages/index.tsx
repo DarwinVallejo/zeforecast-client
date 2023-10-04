@@ -1,9 +1,11 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
-import { Box, Button, Card, Stack } from "@mui/material";
+import { Box, Button, Card, FormControl, FormLabel, Input, Stack } from "@mui/material";
 import Section from "@/components/section";
 import { CloudUpload, Settings } from "@mui/icons-material";
 import ZeTable from "@/components/table";
+import * as React from 'react';
+import InputFileUpload from "@/components/file";
 
 export default function Home() {
   return (
@@ -16,16 +18,43 @@ export default function Home() {
       </Head>
       <Layout>
         <Box>
+        <Section
+            title="Rango de fechas"
+              >
+            <Stack direction={"row"} >
+              <FormControl className="inputDate">
+                <FormLabel>Fecha inicial</FormLabel>
+                <Input
+                  type="date"
+                  slotProps={{
+                    input: {
+                      min: '2018-06-07T00:00',
+                      max: '2018-06-14T00:00',
+                    },
+                  }}/>
+              </FormControl>
+              <FormControl sx={{width:"20%"}}>
+                <FormLabel>Fecha final</FormLabel>
+                <Input
+                  type="date"
+                  slotProps={{
+                    input: {
+                      min: '2018-06-07T00:00',
+                      max: '2018-06-14T00:00',
+                    },
+                  }}/>
+              </FormControl>
+          </Stack>
+          </Section>
+          
           <Stack direction={"row"} justifyContent={"space-between"}>
             <Box sx={{flex:1}}>
               <Section
-                  title="Calendario"
+                  title="Calendario de promociones"
                   description="You can set discount calendar date in excel format"
                 >
                   <Stack direction={"row"} gap={2}>
-                    <Button variant="contained" startIcon={<CloudUpload />}>
-                      Subir archivo
-                    </Button>
+                    <InputFileUpload/>
                   </Stack>
               </Section>
             </Box>
@@ -35,9 +64,7 @@ export default function Home() {
                 description="You can set SKU variables"
               >
                 <Stack direction={"row"} gap={2}>
-                  <Button variant="contained" startIcon={<CloudUpload />}>
-                    Subir archivo
-                  </Button>
+                  <InputFileUpload/>
                 </Stack>
               </Section>
             </Box>
@@ -49,7 +76,6 @@ export default function Home() {
               <ZeTable/>
             </Box>
           </Section>
-          
         </Box>
       </Layout>
       
