@@ -5,4 +5,25 @@ html {
 body {
   margin: 0px;
   height: 100%;
+  font-family:sans-serif
+}
+
+
+.btnProcess{
+  background-color: white;
+  color:black
+}
+
+.titles{
+  margin-left: 10px;
+  font-size: 5vh;
+  font-weight: bold;
+}
+
+.table{
+  padding-right: 50px;
+}
+
+.thead{
+  font-weight: bold;
 }

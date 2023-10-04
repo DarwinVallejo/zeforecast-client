@@ -5,9 +5,10 @@ type Props = {
   children: JSX.Element;
   icon: JSX.Element;
   title: string;
+  description? :string;
 };
 
-const Section = ({ children, icon, title }: Props) => {
+const Section = ({ children, icon, title, description }: Props) => {
   return (
     <Box>
       <Stack
@@ -18,10 +19,11 @@ const Section = ({ children, icon, title }: Props) => {
           justifyContent: "flex-start",
         }}
       >
-        <Typography variant="h4">{title}</Typography>
+        <Typography className="titles">{title}</Typography>
         {icon}
       </Stack>
-      <Box paddingLeft={8} paddingY={4}>
+      <Box paddingLeft={8} paddingY={0} paddingBottom={10}>
+        <p>{description}</p>
         {children}
       </Box>
     </Box>

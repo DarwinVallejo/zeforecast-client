@@ -6,7 +6,8 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FunctionsIcon from "@mui/icons-material/Functions";
 import PublicIcon from "@mui/icons-material/Public";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import { CloudUpload } from "@mui/icons-material";
+import { CloudUpload, Settings } from "@mui/icons-material";
+import ZeTable from "@/components/table";
 
 export default function Home() {
   return (
@@ -21,44 +22,32 @@ export default function Home() {
         <Box>
           <Section
             title="Calendario"
+            description="You can set discount calendar date in excel format"
             icon={<CalendarMonthIcon fontSize="large" />}
           >
             <Stack direction={"row"} gap={2}>
-              <Button variant="contained" startIcon={<CloudDownloadIcon />}>
-                Descargar template
-              </Button>
               <Button variant="contained" startIcon={<CloudUpload />}>
                 Subir archivo
               </Button>
-              <Box>
-                <Button variant="contained" startIcon={<CloudDownloadIcon />}>
-                  Descargar reciente
-                </Button>
-              </Box>
+
             </Stack>
           </Section>
           <Section
-            title="Variables fijas"
-            icon={<PublicIcon fontSize="large" />}
+            title="Configuración"
+            icon={<Settings fontSize="large" />}
           >
-            <Box>Calendario</Box>
+            <Box className="table">
+              <ZeTable/>
+            </Box>
           </Section>
           <Section
-            title="Variables extras"
-            icon={<FunctionsIcon fontSize="large" />}
+            title="Extras"
+            icon={<Settings fontSize="large" />}
           >
             <Stack direction={"row"} gap={2}>
-              <Button variant="contained" startIcon={<CloudDownloadIcon />}>
-                Descargar template
-              </Button>
               <Button variant="contained" startIcon={<CloudUpload />}>
                 Subir archivo
               </Button>
-              <Box>
-                <Button variant="contained" startIcon={<CloudDownloadIcon />}>
-                  Descargar reciente
-                </Button>
-              </Box>
             </Stack>
           </Section>
         </Box>

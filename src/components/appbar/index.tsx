@@ -13,7 +13,7 @@ const AppBar = () => {
       <Toolbar variant="dense" sx={{ py: 2 }}>
         <Typography variant="h4">Zebrands</Typography>
         <Stack flex={1} alignContent={"flex-end"} alignItems={"flex-end"}>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" className="btnProcess">
             Procesar
           </Button>
         </Stack>
