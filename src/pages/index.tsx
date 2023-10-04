@@ -17,12 +17,13 @@ import {
 } from "@mui/material";
 import Section from "@/components/section";
 
-import InputFileUpload from "@/components/file";
 import { useForm } from "react-hook-form";
 import { ForecastSchema, forecastSchema } from "@/schemas/forecast.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { blue } from "@mui/material/colors";
 import { useState } from "react";
+import { MuiFileInput } from 'mui-file-input'
+
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -43,6 +44,12 @@ export default function Home() {
   const { register, handleSubmit } = useForm<ForecastSchema>({
     resolver: yupResolver(forecastSchema),
   });
+  const [calendar, setCalendar] = useState(null)
+  const [premises, setPremises] = useState(null)
+
+  const handleCalendar = (file:any) => setCalendar(file)
+  const handlePremises = (file:any) => setPremises(file)
+
 
   const onSubmit = (data: ForecastSchema) => {
     console.log(data);
@@ -75,39 +82,30 @@ export default function Home() {
                       <Input fullWidth type="date" {...register("endDate")} />
                     </FormControl>
                   </Grid>
+                  <Grid item xs={6} sx={{marginTop:5}}>
+                    <FormControl className="inputDate" fullWidth>
+                      <FormLabel>Calendario de promociones</FormLabel>
+                      <MuiFileInput value={calendar} onChange={handleCalendar} />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6} sx={{marginTop:5}}>
+                    <FormControl className="inputDate" fullWidth>
+                      <FormLabel>Premisas</FormLabel>
+                      <MuiFileInput value={premises} onChange={handlePremises} />
+                    </FormControl>
+                  </Grid>
+                  <Grid  item xs={6} justifyContent={"left"} sx={{marginTop:10}}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      sx={{ width: "300px", backgroundColor: blue[800] }}
+                      type="submit"
+                    >
+                      Procesar
+                    </Button>
+                  </Grid>
                 </Grid>
               </Section>
-            </Grid>
-            <Grid item container xs={8}>
-              <Grid item xs={6}>
-                <div className="">
-                  <Stack direction={"row"} gap={2}>
-                    <InputFileUpload {...register("calendarFile")} />
-                  </Stack>
-                </div>
-              </Grid>
-              <Grid item xs={6} display={"flex"}>
-                <div>
-                  <Stack direction={"row"} gap={2}>
-                    <InputFileUpload {...register("settingFile")} />
-                  </Stack>
-                </div>
-              </Grid>
-            </Grid>
-            <Grid
-              xs={8}
-              display={"flex"}
-              justifyContent={"center"}
-              paddingTop={8}
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ width: "300px", backgroundColor: blue[500] }}
-                type="submit"
-              >
-                Procesar
-              </Button>
             </Grid>
           </Grid>
         </form>
