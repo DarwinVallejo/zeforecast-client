@@ -5,45 +5,44 @@ html {
 body {
   margin: 0px;
   height: 100%;
-  font-family:sans-serif
+  font-family: sans-serif;
 }
 
-
-.btnProcess{
+.btnProcess {
   background-color: white;
-  color:black
+  color: black;
 }
 
-.titles{
+.titles {
   margin-left: 10px;
   font-size: 4vh;
   font-weight: bold;
 }
 
-.table{
+.table {
   padding-right: 50px;
 }
 
-.thead{
+.thead {
   font-weight: bold;
 }
 
-.addContainer{
+.addContainer {
   padding: 30px 20px;
   width: 100%;
 }
 
-.addBtn{
+.addBtn {
   background-color: black;
   color: white;
 }
 
-.addBtn:hover{
+.addBtn:hover {
   background-color: black;
   color: white;
 }
 
-.inputDate{
-  width:20%;
-  margin-right:25px;
+.inputDate {
+  width: 80%;
+  margin-right: 25px;
 }

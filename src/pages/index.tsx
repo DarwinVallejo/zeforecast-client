@@ -1,13 +1,31 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
-import { Box, Button, Card, FormControl, FormLabel, Input, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Grid,
+  Input,
+  Stack,
+} from "@mui/material";
 import Section from "@/components/section";
-import { CloudUpload, Settings } from "@mui/icons-material";
-import ZeTable from "@/components/table";
-import * as React from 'react';
+
 import InputFileUpload from "@/components/file";
+import { useForm } from "react-hook-form";
+import { ForecastSchema, forecastSchema } from "@/schemas/forecast.schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { blue } from "@mui/material/colors";
 
 export default function Home() {
+  const { register, handleSubmit } = useForm<ForecastSchema>({
+    resolver: yupResolver(forecastSchema),
+  });
+
+  const onSubmit = (data: ForecastSchema) => {
+    console.log(data);
+  };
+
   return (
     <>
       <Head>
@@ -17,68 +35,66 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Box>
-        <Section
-            title="Rango de fechas"
-              >
-            <Stack direction={"row"} >
-              <FormControl className="inputDate">
-                <FormLabel>Fecha inicial</FormLabel>
-                <Input
-                  type="date"
-                  slotProps={{
-                    input: {
-                      min: '2018-06-07T00:00',
-                      max: '2018-06-14T00:00',
-                    },
-                  }}/>
-              </FormControl>
-              <FormControl sx={{width:"20%"}}>
-                <FormLabel>Fecha final</FormLabel>
-                <Input
-                  type="date"
-                  slotProps={{
-                    input: {
-                      min: '2018-06-07T00:00',
-                      max: '2018-06-14T00:00',
-                    },
-                  }}/>
-              </FormControl>
-          </Stack>
-          </Section>
-          
-          <Stack direction={"row"} justifyContent={"space-between"}>
-            <Box sx={{flex:1}}>
-              <Section
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid container columnGap={6} justifyContent={"center"}>
+            <Grid item xs={8}>
+              <Section title="Forecast">
+                <Grid container>
+                  <Grid item xs={6}>
+                    <FormControl className="inputDate" fullWidth>
+                      <FormLabel>Fecha inicial</FormLabel>
+                      <Input fullWidth type="date" {...register("startDate")} />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl className="inputDate" fullWidth>
+                      <FormLabel>Fecha final</FormLabel>
+                      <Input fullWidth type="date" {...register("endDate")} />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </Section>
+            </Grid>
+            <Grid item container xs={8}>
+              <Grid item xs={6}>
+                <Section
                   title="Calendario de promociones"
                   description="You can set discount calendar date in excel format"
                 >
                   <Stack direction={"row"} gap={2}>
-                    <InputFileUpload/>
+                    <InputFileUpload {...register("calendarFile")} />
                   </Stack>
-              </Section>
-            </Box>
-            <Box sx={{flex:1}}>
-              <Section
-                title="Variables"
-                description="You can set SKU variables"
+                </Section>
+              </Grid>
+              <Grid item xs={6} display={"flex"}>
+                <Section
+                  title="Premisas"
+                  description="You can set SKU variables"
+                >
+                  <Stack direction={"row"} gap={2}>
+                    <InputFileUpload {...register("settingFile")} />
+                  </Stack>
+                </Section>
+              </Grid>
+            </Grid>
+            <Grid
+              xs={8}
+              display={"flex"}
+              justifyContent={"center"}
+              paddingTop={8}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ width: "300px", backgroundColor: blue[500] }}
+                type="submit"
               >
-                <Stack direction={"row"} gap={2}>
-                  <InputFileUpload/>
-                </Stack>
-              </Section>
-            </Box>
-          </Stack>
-               <Section
-            title="Variables globales"
-          >
-            <Box className="table">
-              <ZeTable/>
-            </Box>
-          </Section>
-        </Box>
+                Procesar
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
       </Layout>
-      
     </>
   );
 }
