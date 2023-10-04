@@ -3,9 +3,6 @@ import Layout from "@/components/layout";
 import { Box, Button, Stack } from "@mui/material";
 import Section from "@/components/section";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import FunctionsIcon from "@mui/icons-material/Functions";
-import PublicIcon from "@mui/icons-material/Public";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { CloudUpload, Settings } from "@mui/icons-material";
 import ZeTable from "@/components/table";
 

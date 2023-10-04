@@ -27,3 +27,15 @@ body {
 .thead{
   font-weight: bold;
 }
+
+.addContainer{
+  padding: 30px 20px;
+  width: 100%;
+}
+
+.addBtn{
+  background-color: black;
+  color: white;
+}:hover{
+  pointer-events: none;
+}
