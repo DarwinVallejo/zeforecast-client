@@ -1,10 +1,11 @@
+from openpyxl.worksheet.table import Table,TableStyleInfo
 import openpyxl
 
 excel_data = [
     {
         "name":"----" ,
-        "headers": ["VOLUMEN", "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE", "TOTAL"],
         "data": [
+            ('VOLUMEN', "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE", "TOTAL"),
             ('BLUE HS', 163, 291, 406, 389, 747, 435, 459, 650, 381, 470, 1446, 381, 6218),
             ('COLCHONES BASICS 1', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
             ('COLCHONES BASICS 2', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -20,25 +21,53 @@ excel_data = [
             ('COLCHONES NATIV', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
             ('ORIGINAL PLUS', 180, 462, 644, 508, 757, 562, 590, 841, 461, 605, 1388, 461, 7459),
             ('JUEGO BOX + COLCHÓN ORIGINAL PLUS', 0, 253, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 253),
-            ('JUEGO BOX + COLCHÓN ONE', 0, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 147)
+            ('JUEGO BOX + COLCHÓN ONE', 0, 147, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
         ]
-    }
+    },
+    {
+        "name":"other" ,
+        "data": [
+            ('VOLUMEN', "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE", "TOTAL"),
+            ('BASES ELÉCTRICAS', 163, 291, 406, 389, 747, 435, 459, 650, 381, 470, 1446, 381, 6218),
+            ('BASES JALISCOS', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+            ('BASES GDL', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+            ('BASES MÉRIDA', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        ]
+    }, 
+    {
+        "name":"totals" ,
+        "data": [
+            ('TIPO', "TOTAL ENERO", "TOTAL FEBRERO", "TOTAL MARZO", "TOTAL ABRIL", "TOTAL MAYO", "TOTAL JUNIO", "TOTAL JULIO", "TOTAL AGOSTO", "TOTAL SEPTIEMBRE", "TOTAL OCTUBRE", "TOTAL NOVIEMBRE", "TOTAL DICIEMBRE", "TOTAL"),
+            ('VOLUMEN', 1354,2687,4408,3678,5999, 4130, 4350 , 5802 , 3519 , 4457 , 9930 , 3543 , 5857),
+            ('VALOR', 1354,2687,4408,3678,5999, 4130, 4350 , 5802 , 3519 , 4457 , 9930 , 3543 , 5857),
+        ]
+    },
 ]
 
-def save_data_in_excel(workbook, sheet, headers, data):
-    sheet.append(headers)
-    
-    for fila in range(len(data)):
-        for columna in range(len(data[fila])):
-            sheet.cell(row=fila + 2, column=columna + 1, value=data[fila][columna])
+def save_data_in_excel(workbook, sheet, data, name):
+    num_rows1 = len(data)
+    num_cols1 = len(data[0])
 
-    workbook.save('tabla_.xlsx')
+    for row in data:
+        sheet.append(row)
 
+    table = Table(displayName="table_"+name, ref=f"A1:{chr(ord('A') + num_cols1 - 1)}{num_rows1}")
+    sheet.add_table(table)
+    space(sheet)
+
+def space(sheet):
+    sheet.append([""])
+    sheet.append([""])
+    sheet.append([""])
 
 def run():
     workbook = openpyxl.Workbook()
     sheet = workbook.active
+
     for table in excel_data:
-        save_data_in_excel(workbook, sheet, table.get("headers"), table.get("data"))
+        save_data_in_excel(workbook, sheet, table.get("data"), table.get("name"))
+
+    workbook.save('tabla.xlsx')
+
 
 run()
