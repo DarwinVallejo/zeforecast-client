@@ -1,13 +1,19 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
 import {
+  Alert,
   Box,
   Button,
+  CircularProgress,
+  Dialog,
+  DialogContent,
   FormControl,
   FormLabel,
   Grid,
   Input,
+  Snackbar,
   Stack,
+  Typography,
 } from "@mui/material";
 import Section from "@/components/section";
 
@@ -16,14 +22,31 @@ import { useForm } from "react-hook-form";
 import { ForecastSchema, forecastSchema } from "@/schemas/forecast.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { blue } from "@mui/material/colors";
+import { useState } from "react";
 
 export default function Home() {
+  const [loading, setLoading] = useState(false);
+
+  const [openAlert, setOpenAlert] = useState(false);
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
   const { register, handleSubmit } = useForm<ForecastSchema>({
     resolver: yupResolver(forecastSchema),
   });
 
   const onSubmit = (data: ForecastSchema) => {
     console.log(data);
+    setOpenAlert(true);
   };
 
   return (
@@ -89,6 +112,32 @@ export default function Home() {
           </Grid>
         </form>
       </Layout>
+      <Dialog open={loading}>
+        <DialogContent>
+          <Stack alignContent={"center"} alignItems={"center"} gap={2}>
+            <CircularProgress sx={{ color: blue[500] }} />
+            <Typography>Calculando</Typography>
+          </Stack>
+        </DialogContent>
+      </Dialog>
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{
+          horizontal: "right",
+          vertical: "bottom",
+        }}
+      >
+        <Alert
+          onClose={handleClose}
+          variant="filled"
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Proceso realizado correctamente
+        </Alert>
+      </Snackbar>
     </>
   );
 }
