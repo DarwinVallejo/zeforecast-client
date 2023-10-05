@@ -21,8 +21,8 @@ export default async function handler(
     const { valid, msn } = validateForm({
       calendar,
       premises,
-      initial: initial[0],
-      final: final[0],
+      initial: initial?.[0] ?? "",
+      final: final?.[0] ?? "",
     });
     if (!valid) {
       return res.status(400).json({ valid, msn });
@@ -30,8 +30,8 @@ export default async function handler(
     const body = buildBody({
       calendar,
       premises,
-      initial: initial[0],
-      final: final[0],
+      initial: initial?.[0] ?? "",
+      final: final?.[0] ?? "",
     });
     return res.status(200).json({ data: body });
   }
