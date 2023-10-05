@@ -8,6 +8,7 @@ import {
   Dialog,
   DialogContent,
   FormControl,
+  FormHelperText,
   FormLabel,
   Grid,
   Input,
@@ -21,43 +22,20 @@ import { Controller, useForm } from "react-hook-form";
 import { ForecastSchema, forecastSchema } from "@/schemas/forecast.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { blue } from "@mui/material/colors";
-import { useState } from "react";
-import { MuiFileInput } from 'mui-file-input'
-
+import { MuiFileInput } from "mui-file-input";
+import useForecast from "@/hooks/useForecast";
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
+  const { loading, handleClose, onCalculate, openAlert } = useForecast();
 
-  const [openAlert, setOpenAlert] = useState(false);
-
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpenAlert(false);
-  };
-
-  const { register, handleSubmit, control } = useForm<ForecastSchema>({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<ForecastSchema>({
     resolver: yupResolver(forecastSchema),
   });
-  const [calendar, setCalendar] = useState(null);
-  const [premises, setPremises] = useState(null);
-  
-  const handleCalendar = (file:any) => {
-    setCalendar(file)
-  }
-  const handlePremises = (file:any) => {
-    setPremises(file)
-  }
-
-  const onSubmit = (data: ForecastSchema) => {
-    console.log(data);
-    setOpenAlert(true);
-  };
 
   return (
     <>
@@ -68,7 +46,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onCalculate)}>
           <Grid container columnGap={6} justifyContent={"center"}>
             <Grid item xs={8}>
               <Section title="Forecast">
@@ -76,16 +54,36 @@ export default function Home() {
                   <Grid item xs={6}>
                     <FormControl className="inputDate" fullWidth>
                       <FormLabel>Fecha inicial</FormLabel>
-                      <Input fullWidth type="date" {...register("startDate")} />
+                      <Input
+                        fullWidth
+                        type="date"
+                        {...register("startDate")}
+                        error={!!errors.startDate}
+                      />
+                      {!!errors.startDate && (
+                        <FormHelperText error>
+                          {errors.startDate?.message}
+                        </FormHelperText>
+                      )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl className="inputDate" fullWidth>
                       <FormLabel>Fecha final</FormLabel>
-                      <Input fullWidth type="date" {...register("endDate")} />
+                      <Input
+                        fullWidth
+                        type="date"
+                        {...register("endDate")}
+                        error={!!errors.endDate}
+                      />
+                      {!!errors.endDate && (
+                        <FormHelperText error>
+                          {errors.endDate?.message}
+                        </FormHelperText>
+                      )}
                     </FormControl>
                   </Grid>
-                  <Grid item xs={6} sx={{marginTop:5}}>
+                  <Grid item xs={6} sx={{ marginTop: 5 }}>
                     <FormControl className="inputDate" fullWidth>
                       <FormLabel>Calendario de promociones</FormLabel>
                       <Controller
@@ -94,13 +92,17 @@ export default function Home() {
                           required: true,
                         }}
                         render={({ field: { onChange, value } }) => (
-                          <MuiFileInput value={value} onChange={onChange} placeholder="Subir archivo excel"/>
+                          <MuiFileInput
+                            value={value}
+                            onChange={onChange}
+                            placeholder="Subir archivo excel"
+                          />
                         )}
                         name="calendar"
                       />
                     </FormControl>
                   </Grid>
-                  <Grid item xs={6} sx={{marginTop:5}}>
+                  <Grid item xs={6} sx={{ marginTop: 5 }}>
                     <FormControl className="inputDate" fullWidth>
                       <FormLabel>Premisas</FormLabel>
                       <Controller
@@ -109,16 +111,26 @@ export default function Home() {
                           required: true,
                         }}
                         render={({ field: { onChange, value } }) => (
-                          <MuiFileInput value={value} onChange={onChange} placeholder="Subir archivo excel" />
+                          <MuiFileInput
+                            value={value}
+                            onChange={onChange}
+                            placeholder="Subir archivo excel"
+                          />
                         )}
                         name="premises"
                       />
                     </FormControl>
                   </Grid>
-                  <Grid  item xs={6} justifyContent={"left"} sx={{marginTop:5}}>
+                  <Grid
+                    item
+                    xs={6}
+                    justifyContent={"left"}
+                    sx={{ marginTop: 5 }}
+                  >
                     <Button
                       variant="contained"
                       color="primary"
+                      disabled={loading}
                       sx={{ width: "300px", backgroundColor: blue[800] }}
                       type="submit"
                     >

@@ -2,9 +2,13 @@ import dayjs from "dayjs";
 import * as yup from "yup";
 
 export const forecastSchema = yup.object().shape({
-  startDate: yup.date().required("Campo requerido"),
+  startDate: yup
+    .date()
+    .typeError("Campo requerido")
+    .required("Campo requerido"),
   endDate: yup
     .date()
+    .typeError("Campo requerido")
     .required("Campo requerido")
     .nullable()
     .default(undefined)
