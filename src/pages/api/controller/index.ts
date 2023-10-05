@@ -43,7 +43,6 @@ const format = (list:any) => {
 const buildBody = async({calendar, premises, start_date, end_date}: FormType) => {
     const calendarData = getExcelData(calendar);
     const premisesData = getExcelData(premises);
-    const request = await axios.get(REQUEST_URL);
     return {
         configurations: {
             discount_calendar: format(calendarData),
@@ -59,6 +58,6 @@ const buildBody = async({calendar, premises, start_date, end_date}: FormType) =>
 export const makeRequest = async ({calendar, premises, start_date, end_date}: FormType) => {
     const data =  await buildBody({calendar, premises, start_date, end_date});
     //console.log(JSON.stringify(data));
-    const _response  = await axios.get(REQUEST_URL);
+    const _response  = await axios.get(REQUEST_URL,{data});
     return RESPONSE_MOCK.data;
 };
