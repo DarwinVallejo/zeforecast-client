@@ -16,10 +16,11 @@ export const validateForm = ({calendar, premises, initial, final}: FormType) => 
     return {valid: true, msn: undefined}
 }
 const getExcelData = (excel:any) => {
-    const workbook = XLSX.readFile(excel[0].filepath);
-      return XLSX.utils.sheet_to_json(
-        workbook.Sheets[workbook.SheetNames[0]]
-      );}
+    const workbook = XLSX.readFile(excel[0].filepath, {cellText:true});
+    return XLSX.utils.sheet_to_json(
+        workbook.Sheets[workbook.SheetNames[0]], { raw:false }
+    )
+}
 
 export const buildBody = ({calendar, premises, initial, final}: FormType) => {
     const calendarData = getExcelData(calendar);
