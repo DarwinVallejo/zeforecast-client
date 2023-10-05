@@ -5,6 +5,7 @@ import { useState } from "react";
 const useForecast = () => {
   const [loading, setLoading] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [fileData, setFileData] = useState<string | null>(null);
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -23,17 +24,17 @@ const useForecast = () => {
       const form = new FormData();
       form.append("initial", dayjs(data.startDate).toString());
       form.append("final", dayjs(data.endDate).toString());
-      form.append("calendar", data.calendar);
-      form.append("premises", data.premises);
+      form.append("calendar", data.calendar as any);
+      form.append("premises", data.premises as any);
 
       const response = await fetch("/api/calculate", {
         method: "POST",
         body: form,
       });
 
-      const responseData = await response.json();
-
-      console.log(responseData);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      setFileData(url);
       setLoading(false);
       setOpenAlert(true);
     } catch (error) {
@@ -47,6 +48,7 @@ const useForecast = () => {
     openAlert,
     handleClose,
     onCalculate,
+    fileData,
   };
 };
 

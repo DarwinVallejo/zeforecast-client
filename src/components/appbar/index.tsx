@@ -4,7 +4,7 @@ import { AppBar as MuiAppBar, Toolbar } from "@mui/material";
 const AppBar = () => {
   return (
     <MuiAppBar position="static" component={"nav"}>
-      <Toolbar variant="dense" sx={{ py: 2 }}>
+      <Toolbar variant="dense" sx={{ py: 1 }}>
         <Image
           src={"/zebrands-logo.png"}
           alt={"section logo"}

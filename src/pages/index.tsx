@@ -23,12 +23,15 @@ import Section from "@/components/section";
 import { Controller, useForm } from "react-hook-form";
 import { ForecastSchema, forecastSchema } from "@/schemas/forecast.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { blue } from "@mui/material/colors";
+import { blue, green } from "@mui/material/colors";
 import { MuiFileInput } from "mui-file-input";
 import useForecast from "@/hooks/useForecast";
+import dayjs from "dayjs";
+import { Download } from "@mui/icons-material";
 
 export default function Home() {
-  const { loading, handleClose, onCalculate, openAlert } = useForecast();
+  const { loading, handleClose, onCalculate, openAlert, fileData } =
+    useForecast();
 
   const {
     register,
@@ -109,11 +112,18 @@ export default function Home() {
                         rules={{
                           required: true,
                         }}
-                        render={({ field: { onChange, value } }) => (
+                        render={({
+                          field: { onChange, value },
+                          fieldState,
+                        }) => (
                           <MuiFileInput
                             value={value}
                             onChange={onChange}
                             placeholder="Subir archivo excel"
+                            error={fieldState.invalid}
+                            helperText={
+                              fieldState.invalid ? "Campo requerido" : ""
+                            }
                           />
                         )}
                         name="calendar"
@@ -128,11 +138,18 @@ export default function Home() {
                         rules={{
                           required: true,
                         }}
-                        render={({ field: { onChange, value } }) => (
+                        render={({
+                          field: { onChange, value },
+                          fieldState,
+                        }) => (
                           <MuiFileInput
                             value={value}
                             onChange={onChange}
                             placeholder="Subir archivo excel"
+                            error={fieldState.invalid}
+                            helperText={
+                              fieldState.invalid ? "Campo requerido" : ""
+                            }
                           />
                         )}
                         name="premises"
@@ -141,9 +158,9 @@ export default function Home() {
                   </Grid>
                   <Grid
                     item
-                    xs={6}
+                    xs={4}
                     justifyContent={"left"}
-                    sx={{ marginTop: 5 }}
+                    sx={{ marginTop: 8 }}
                   >
                     <Button
                       variant="contained"
@@ -155,6 +172,33 @@ export default function Home() {
                       Procesar
                     </Button>
                   </Grid>
+                  {fileData && (
+                    <Grid
+                      item
+                      xs={6}
+                      justifyContent={"left"}
+                      sx={{ marginTop: 8 }}
+                    >
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        download={`forecast_${dayjs().unix()}.xlsx`}
+                        href={fileData}
+                        disabled={loading}
+                        sx={{
+                          width: "300px",
+                          backgroundColor: green[800],
+                          "&:hover": {
+                            backgroundColor: green[700],
+                          },
+                        }}
+                        type="submit"
+                        endIcon={<Download />}
+                      >
+                        Descargar
+                      </Button>
+                    </Grid>
+                  )}
                 </Grid>
               </Section>
             </Grid>
