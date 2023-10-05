@@ -40,6 +40,7 @@ const buildBody = async({calendar, premises, start_date, end_date}: FormType) =>
 
 export const makeRequest = async ({calendar, premises, start_date, end_date}: FormType) => {
     const data =  await buildBody({calendar, premises, start_date, end_date});
+    console.log(data);
     const _response  = await axios.get(REQUEST_URL);
     return RESPONSE_MOCK.data;
 };

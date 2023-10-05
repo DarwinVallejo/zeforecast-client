@@ -21,12 +21,10 @@ export default async function handler(
     const start_date = initial && initial[0];
     const end_date = final && final[0] ;
     const { valid, msn } = validateForm({calendar,premises,start_date,end_date});
-
     if (!valid) { return res.status(400).json({ valid, msn }); }
     const {file} = await makeRequest({calendar,premises,start_date, end_date});
-    const now = dayjs();
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', `attachment; filename="forecast_${now.unix}.xlsx"`);
+    res.setHeader('Content-Disposition', `attachment; filename="forecast.xlsx"`);
     res.end(file, 'base64');
   }
 }
