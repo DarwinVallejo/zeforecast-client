@@ -20,11 +20,29 @@ export default async function handler(
     const { calendar, premises } = files;
     const start_date = initial && dayjs(initial[0]).format("YYYY-MM-DD");
     const end_date = final && dayjs(final[0]).format("YYYY-MM-DD");
-    const { valid, msn } = validateForm({calendar,premises,start_date,end_date});
-    if (!valid) { return res.status(400).json({ valid, msn }); }
-    const {file} = await makeRequest({calendar,premises,start_date, end_date});
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', `attachment; filename="forecast.xlsx"`);
-    res.end(file, 'base64');
+    const { valid, msn } = validateForm({
+      calendar,
+      premises,
+      start_date,
+      end_date,
+    });
+    if (!valid) {
+      return res.status(400).json({ valid, msn });
+    }
+    const { file } = await makeRequest({
+      calendar,
+      premises,
+      start_date,
+      end_date,
+    });
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="forecast.xlsx"`
+    );
+    res.end(file, "base64");
   }
 }
