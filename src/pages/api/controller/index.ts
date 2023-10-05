@@ -16,10 +16,7 @@ export const validateForm = ({calendar, premises, initial, final}: FormType) => 
     return {valid: true, msn: undefined}
 }
 const getExcelData = (excel:any) => {
-    const workbook = XLSX.readFile(excel[0].filepath, {
-        cellDates: true,
-        dateNF: "dd/mm/yy",
-      });
+    const workbook = XLSX.readFile(excel[0].filepath);
       return XLSX.utils.sheet_to_json(
         workbook.Sheets[workbook.SheetNames[0]]
       );}
@@ -30,7 +27,9 @@ export const buildBody = ({calendar, premises, initial, final}: FormType) => {
     return {
         calendar: calendarData,
         premises: premisesData,
-        initial,
-        final
+        request_period:{
+            start_date:initial,
+            end_date:final
+        }
     }
 }
