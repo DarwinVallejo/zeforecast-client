@@ -20,9 +20,9 @@ export const forecastSchema = yup.object().shape({
         }
       }
     ),
-  settingFile: yup.mixed(),
+  premises: yup.mixed(),
 
-  calendarFile: yup.mixed(),
+  calendar: yup.mixed(),
 });
 
 export type ForecastSchema = yup.InferType<typeof forecastSchema>;

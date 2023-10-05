@@ -12,7 +12,6 @@ const AppBar = () => {
     <MuiAppBar position="static" component={"nav"}>
       <Toolbar variant="dense" sx={{ py: 2 }}>
         <Typography variant="h4">Zebrands</Typography>
-        
       </Toolbar>
     </MuiAppBar>
   );

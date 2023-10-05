@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import Section from "@/components/section";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { ForecastSchema, forecastSchema } from "@/schemas/forecast.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { blue } from "@mui/material/colors";
@@ -41,15 +41,18 @@ export default function Home() {
     setOpenAlert(false);
   };
 
-  const { register, handleSubmit } = useForm<ForecastSchema>({
+  const { register, handleSubmit, control } = useForm<ForecastSchema>({
     resolver: yupResolver(forecastSchema),
   });
-  const [calendar, setCalendar] = useState(null)
-  const [premises, setPremises] = useState(null)
-
-  const handleCalendar = (file:any) => setCalendar(file)
-  const handlePremises = (file:any) => setPremises(file)
-
+  const [calendar, setCalendar] = useState(null);
+  const [premises, setPremises] = useState(null);
+  
+  const handleCalendar = (file:any) => {
+    setCalendar(file)
+  }
+  const handlePremises = (file:any) => {
+    setPremises(file)
+  }
 
   const onSubmit = (data: ForecastSchema) => {
     console.log(data);
@@ -85,16 +88,34 @@ export default function Home() {
                   <Grid item xs={6} sx={{marginTop:5}}>
                     <FormControl className="inputDate" fullWidth>
                       <FormLabel>Calendario de promociones</FormLabel>
-                      <MuiFileInput value={calendar} onChange={handleCalendar} />
+                      <Controller
+                        control={control}
+                        rules={{
+                          required: true,
+                        }}
+                        render={({ field: { onChange, value } }) => (
+                          <MuiFileInput value={value} onChange={onChange} />
+                        )}
+                        name="calendar"
+                      />
                     </FormControl>
                   </Grid>
                   <Grid item xs={6} sx={{marginTop:5}}>
                     <FormControl className="inputDate" fullWidth>
                       <FormLabel>Premisas</FormLabel>
-                      <MuiFileInput value={premises} onChange={handlePremises} />
+                      <Controller
+                        control={control}
+                        rules={{
+                          required: true,
+                        }}
+                        render={({ field: { onChange, value } }) => (
+                          <MuiFileInput value={value} onChange={onChange} />
+                        )}
+                        name="premises"
+                      />
                     </FormControl>
                   </Grid>
-                  <Grid  item xs={6} justifyContent={"left"} sx={{marginTop:10}}>
+                  <Grid  item xs={6} justifyContent={"left"} sx={{marginTop:5}}>
                     <Button
                       variant="contained"
                       color="primary"
