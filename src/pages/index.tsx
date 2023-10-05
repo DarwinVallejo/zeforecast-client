@@ -35,6 +35,10 @@ export default function Home() {
     formState: { errors },
   } = useForm<ForecastSchema>({
     resolver: yupResolver(forecastSchema),
+    defaultValues: {
+      calendar: null,
+      premises: null,
+    },
   });
 
   return (
@@ -49,13 +53,12 @@ export default function Home() {
         <form onSubmit={handleSubmit(onCalculate)}>
           <Grid container columnGap={6} justifyContent={"center"}>
             <Grid item xs={8}>
-              <Section title="Forecast">
+              <Section title="ZeForecast">
                 <Grid container>
                   <Grid item xs={6}>
-                    <FormControl className="inputDate" fullWidth>
+                    <FormControl className="inputDate">
                       <FormLabel>Fecha inicial</FormLabel>
                       <Input
-                        fullWidth
                         type="date"
                         {...register("startDate")}
                         error={!!errors.startDate}
@@ -68,10 +71,9 @@ export default function Home() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={6}>
-                    <FormControl className="inputDate" fullWidth>
+                    <FormControl className="inputDate">
                       <FormLabel>Fecha final</FormLabel>
                       <Input
-                        fullWidth
                         type="date"
                         {...register("endDate")}
                         error={!!errors.endDate}
@@ -84,7 +86,7 @@ export default function Home() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={6} sx={{ marginTop: 5 }}>
-                    <FormControl className="inputDate" fullWidth>
+                    <FormControl className="inputDate">
                       <FormLabel>Calendario de promociones</FormLabel>
                       <Controller
                         control={control}
@@ -103,7 +105,7 @@ export default function Home() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={6} sx={{ marginTop: 5 }}>
-                    <FormControl className="inputDate" fullWidth>
+                    <FormControl className="inputDate">
                       <FormLabel>Premisas</FormLabel>
                       <Controller
                         control={control}
