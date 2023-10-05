@@ -94,7 +94,7 @@ export default function Home() {
                           required: true,
                         }}
                         render={({ field: { onChange, value } }) => (
-                          <MuiFileInput value={value} onChange={onChange} />
+                          <MuiFileInput value={value} onChange={onChange} placeholder="Subir archivo excel"/>
                         )}
                         name="calendar"
                       />
@@ -109,7 +109,7 @@ export default function Home() {
                           required: true,
                         }}
                         render={({ field: { onChange, value } }) => (
-                          <MuiFileInput value={value} onChange={onChange} />
+                          <MuiFileInput value={value} onChange={onChange} placeholder="Subir archivo excel" />
                         )}
                         name="premises"
                       />
