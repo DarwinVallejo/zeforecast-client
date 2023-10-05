@@ -18,18 +18,18 @@ export const validateForm = ({calendar, premises, start_date, end_date}: FormTyp
     return {valid: true, msn: undefined}
 }
 const getExcelData = (excel:any) => {
-    const workbook = XLSX.readFile(excel[0].filepath, {cellText:true});
+    const workbook = XLSX.readFile(excel[0].filepath, {cellDates:true});
     return XLSX.utils.sheet_to_json(
-        workbook.Sheets[workbook.SheetNames[0]], { raw:false }
+        workbook.Sheets[workbook.SheetNames[0]]
     )
 }
 
-export const buildBody = async({calendar, premises, start_date, end_date}: FormType) => {
+const buildBody = async({calendar, premises, start_date, end_date}: FormType) => {
     const calendarData = getExcelData(calendar);
     const premisesData = getExcelData(premises);
     const request = await axios.get(REQUEST_URL)
     return {
-        calendar: calendarData,
+        discount_calendar: calendarData,
         premises: premisesData,
         request_period:{
             start_date,
@@ -43,19 +43,3 @@ export const makeRequest = async ({calendar, premises, start_date, end_date}: Fo
     const _response  = await axios.get(REQUEST_URL);
     return RESPONSE_MOCK.data;
 };
-
-export const downloadFile = (file:string) => {
-    return new Promise((resolve, rejected) => {
-        try{
-            const bf = Buffer.from(file);
-            const workbook = XLSX.read(bf.toString());
-            const now = new Date().toISOString();
-            XLSX.writeFile(workbook, `./Dowloads/forcast_${now}.xlsx`);
-            resolve(true);
-        }catch (err) {
-            rejected(err);
-        }
-       
-    })
-    
-}

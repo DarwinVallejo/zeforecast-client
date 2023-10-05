@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { buildBody, downloadFile, makeRequest, validateForm } from "./controller";
+import { makeRequest, validateForm } from "./controller";
 import formidable from "formidable";
+import dayjs from "dayjs";
 
 export const config = {
   api: {
@@ -20,14 +21,12 @@ export default async function handler(
     const start_date = initial && initial[0];
     const end_date = final && final[0] ;
     const { valid, msn } = validateForm({calendar,premises,start_date,end_date});
-    
+
     if (!valid) { return res.status(400).json({ valid, msn }); }
-    
     const {file} = await makeRequest({calendar,premises,start_date, end_date});
-    downloadFile(file).then(() => {
-      return res.status(200).json({ok:true, msn:"Forecast downloaded"});
-    }).catch((err) => {
-      return res.status(400).json({ok:false, err});
-    })
+    const now = dayjs();
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename="forecast_${now.unix}.xlsx"`);
+    res.end(file, 'base64');
   }
 }
