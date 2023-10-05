@@ -1,17 +1,16 @@
-import {
-  Box,
-  Button,
-  AppBar as MuiAppBar,
-  Stack,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import Image from "next/image";
+import { AppBar as MuiAppBar, Toolbar } from "@mui/material";
 
 const AppBar = () => {
   return (
     <MuiAppBar position="static" component={"nav"}>
       <Toolbar variant="dense" sx={{ py: 2 }}>
-        <Typography variant="h4">Zebrands</Typography>
+        <Image
+          src={"/zebrands-logo.png"}
+          alt={"section logo"}
+          width={180}
+          height={50}
+        />
       </Toolbar>
     </MuiAppBar>
   );
