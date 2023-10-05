@@ -1,5 +1,6 @@
 from openpyxl.worksheet.table import Table,TableStyleInfo
 import openpyxl
+import base64 
 
 excel_data = [
     {
@@ -63,11 +64,18 @@ def space(sheet):
 def run():
     workbook = openpyxl.Workbook()
     sheet = workbook.active
-
     for table in excel_data:
         save_data_in_excel(workbook, sheet, table.get("data"), table.get("name"))
 
     workbook.save('tabla.xlsx')
 
+    filepath = 'tabla.xlsx'
+    workbook = openpyxl.load_workbook(filepath)
+
+    binary_data = None
+    with open(filepath, "rb") as file:
+        binary_data = file.read()
+    base64_data = base64.b64encode(binary_data).decode()
+    print(base64_data)
 
 run()
