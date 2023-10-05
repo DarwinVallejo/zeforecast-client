@@ -18,29 +18,47 @@ export const validateForm = ({calendar, premises, start_date, end_date}: FormTyp
     return {valid: true, msn: undefined}
 }
 const getExcelData = (excel:any) => {
-    const workbook = XLSX.readFile(excel[0].filepath, {cellDates:true});
+    const workbook = XLSX.readFile(excel[0].filepath);
     return XLSX.utils.sheet_to_json(
-        workbook.Sheets[workbook.SheetNames[0]]
+        workbook.Sheets[workbook.SheetNames[0]], {
+            dateNF: 'dd"."mm"."yy', 
+            raw: false, 
+            rawNumbers:true
+        }
     )
+}
+
+const formatCalendar = (list:any) => {
+    return list.map((item:any) => {
+        return {...item, discount:+(item.discount)}
+    })
+}
+
+const formatPremises = (list:any) => {
+    return list.map((item:any) => {
+        return {...item, percentage:+(item.percentage)}
+    })
 }
 
 const buildBody = async({calendar, premises, start_date, end_date}: FormType) => {
     const calendarData = getExcelData(calendar);
     const premisesData = getExcelData(premises);
-    const request = await axios.get(REQUEST_URL)
+    const request = await axios.get(REQUEST_URL);
     return {
-        discount_calendar: calendarData,
-        premises: premisesData,
-        request_period:{
-            start_date,
-            end_date
+        configurations: {
+            discount_calendar: formatCalendar(calendarData),
+            premises: formatPremises(premisesData),
+            request_period:{
+                start_date,
+                end_date
+            }
         }
     }
 }
 
 export const makeRequest = async ({calendar, premises, start_date, end_date}: FormType) => {
     const data =  await buildBody({calendar, premises, start_date, end_date});
-    console.log(data);
+    console.log(JSON.stringify(data));
     const _response  = await axios.get(REQUEST_URL);
     return RESPONSE_MOCK.data;
 };

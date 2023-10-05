@@ -18,8 +18,8 @@ export default async function handler(
     const [field, files] = await form.parse(req);
     const { initial, final } = field;
     const { calendar, premises } = files;
-    const start_date = initial && initial[0];
-    const end_date = final && final[0] ;
+    const start_date = initial && dayjs(initial[0]).format("YYYY/MM/DD");
+    const end_date = final && dayjs(final[0]).format("YYYY/MM/DD");
     const { valid, msn } = validateForm({calendar,premises,start_date,end_date});
     if (!valid) { return res.status(400).json({ valid, msn }); }
     const {file} = await makeRequest({calendar,premises,start_date, end_date});
