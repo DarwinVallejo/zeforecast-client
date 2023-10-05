@@ -1,5 +1,6 @@
 import { REQUEST_URL, RESPONSE_MOCK } from '@/utils';
 import axios from 'axios';
+import dayjs from 'dayjs';
 import * as XLSX from 'xlsx';
 
 export const validateForm = ({calendar, premises, start_date, end_date}: FormType) => {
@@ -30,13 +31,23 @@ const getExcelData = (excel:any) => {
 
 const formatCalendar = (list:any) => {
     return list.map((item:any) => {
-        return {...item, discount:+(item.discount)}
+        return {
+            ...item, 
+            percentage:+(item.percentage),
+            start_date: dayjs(item.start_date).format("YYYY-MM-DD"),
+            end_date: dayjs(item.start_date).format("YYYY-MM-DD")
+        }
     })
 }
 
 const formatPremises = (list:any) => {
     return list.map((item:any) => {
-        return {...item, percentage:+(item.percentage)}
+        return {
+            ...item, 
+            percentage:+(item.percentage),
+            start_date: dayjs(item.start_date).format("YYYY-MM-DD"),
+            end_date: dayjs(item.start_date).format("YYYY-MM-DD")
+        }
     })
 }
 
@@ -58,7 +69,7 @@ const buildBody = async({calendar, premises, start_date, end_date}: FormType) =>
 
 export const makeRequest = async ({calendar, premises, start_date, end_date}: FormType) => {
     const data =  await buildBody({calendar, premises, start_date, end_date});
-    console.log(JSON.stringify(data));
+    //console.log(JSON.stringify(data));
     const _response  = await axios.get(REQUEST_URL);
     return RESPONSE_MOCK.data;
 };
