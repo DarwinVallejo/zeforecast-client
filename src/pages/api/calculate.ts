@@ -23,8 +23,13 @@ export default async function handler(
     const { valid, msn } = validateForm({
       calendar,
       premises,
+<<<<<<< HEAD
       start_date,
       end_date,
+=======
+      initial: initial?.[0] ?? "",
+      final: final?.[0] ?? "",
+>>>>>>> 58a077b9f13d636c69704f6998a51b6355ba3737
     });
     if (!valid) {
       return res.status(400).json({ valid, msn });
@@ -32,8 +37,13 @@ export default async function handler(
     const { file } = await makeRequest({
       calendar,
       premises,
+<<<<<<< HEAD
       start_date,
       end_date,
+=======
+      initial: initial?.[0] ?? "",
+      final: final?.[0] ?? "",
+>>>>>>> 58a077b9f13d636c69704f6998a51b6355ba3737
     });
     res.setHeader(
       "Content-Type",
