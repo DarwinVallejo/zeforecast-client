@@ -29,24 +29,13 @@ const getExcelData = (excel:any) => {
     )
 }
 
-const formatCalendar = (list:any) => {
+const format = (list:any) => {
     return list.map((item:any) => {
         return {
             ...item, 
             percentage:+(item.percentage),
             start_date: dayjs(item.start_date).format("YYYY-MM-DD"),
-            end_date: dayjs(item.start_date).format("YYYY-MM-DD")
-        }
-    })
-}
-
-const formatPremises = (list:any) => {
-    return list.map((item:any) => {
-        return {
-            ...item, 
-            percentage:+(item.percentage),
-            start_date: dayjs(item.start_date).format("YYYY-MM-DD"),
-            end_date: dayjs(item.start_date).format("YYYY-MM-DD")
+            end_date: dayjs(item.end_date).format("YYYY-MM-DD")
         }
     })
 }
@@ -57,8 +46,8 @@ const buildBody = async({calendar, premises, start_date, end_date}: FormType) =>
     const request = await axios.get(REQUEST_URL);
     return {
         configurations: {
-            discount_calendar: formatCalendar(calendarData),
-            premises: formatPremises(premisesData),
+            discount_calendar: format(calendarData),
+            premises: format(premisesData),
             request_period:{
                 start_date,
                 end_date
