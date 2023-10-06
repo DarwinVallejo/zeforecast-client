@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/calculate.ts": {
+    "pages/api/calculate.ts": {
       "maxDuration": 60
     }
   }
